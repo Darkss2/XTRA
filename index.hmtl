@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>معرض أعمالي | XTRA Portfolio</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts (Cairo for Arabic) -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Swiper CSS (For the Slider) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Cairo', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            dark: '#1a1a1a',
+                            darker: '#111111',
+                            accent: '#ffb700', // Yellow/Gold
+                            green: '#46a034', // Your Brand Green
+                            text: '#a0a0a0',
+                            heading: '#ffffff'
+                        }
+                    },
+                    backgroundImage: {
+                        'hero-gradient': 'linear-gradient(135deg, #333333 0%, #1a1a1a 100%)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Styles */
+        .curve-bottom {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+            transform: rotate(180deg);
+        }
+
+        .curve-bottom svg {
+            position: relative;
+            display: block;
+            width: calc(100% + 1.3px);
+            height: 80px;
+        }
+
+        .curve-bottom .shape-fill {
+            fill: #ffffff;
+        }
+
+        /* FAQ Accordion Transition */
+        .faq-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        .faq-item.active .faq-content {
+            max-height: 500px;
+        }
+        .faq-item.active i {
+            transform: rotate(180deg);
+        }
+
+        /* --- Swiper Slider Styles --- */
+        .swiper {
+            width: 100%;
+            padding-top: 50px;
+            padding-bottom: 50px;
+        }
+
+        .swiper-slide {
+            background-position: center;
+            background-size: cover;
+            width: 300px;
+            height: auto;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            /* Shadow for depth */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        /* Make active slide larger */
+        .swiper-slide-active {
+            transform: scale(1.2);
+            z-index: 10;
+            border: 2px solid #46a034; /* Green border for active item */
+        }
+
+        @media (min-width: 768px) {
+            .swiper-slide {
+                width: 600px; /* Wider slides on desktop */
+            }
+        }
+
+        /* Navigation Buttons */
+        .slider-nav-btn {
+            background-color: #46a034; /* Your Green Brand Color */
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 14px rgba(70, 160, 52, 0.4);
+            z-index: 20;
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .slider-nav-btn:hover {
+            background-color: #3a852b;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .slider-prev { right: 20px; } /* Arabic RTL positioning */
+        .slider-next { left: 20px; }
+
+        /* Hide default Swiper arrows */
+        .swiper-button-next::after, .swiper-button-prev::after {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-brand-dark text-brand-text font-sans antialiased">
+
+    <!-- Floating WhatsApp Button (Fixed on Screen) -->
+    <a href="https://wa.me/213793726558" target="_blank" class="fixed bottom-8 right-6 z-50 bg-[#25D366] text-white w-16 h-16 rounded-full flex items-center justify-center text-4xl shadow-2xl hover:scale-110 hover:bg-[#128C7E] transition-all duration-300 border-2 border-white/10" aria-label="Chat on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Header / Hero Section -->
+    <header class="relative bg-hero-gradient pt-10 pb-48 overflow-hidden">
+        <!-- Navigation -->
+        <div class="container mx-auto px-6 flex justify-between items-center mb-20">
+            <div class="text-white font-bold text-2xl tracking-widest flex items-center gap-2">
+                <span class="text-brand-accent text-3xl"><i class="fas fa-crosshairs"></i></span> XTRA
+            </div>
+            <!-- Updated Contact Link to WhatsApp (New Number) -->
+            <a href="https://wa.me/213793726558" target="_blank" class="bg-brand-accent text-black font-bold py-2 px-6 rounded hover:bg-yellow-500 transition text-sm">
+                <i class="fab fa-whatsapp ml-2"></i> تواصل معي
+            </a>
+        </div>
+
+        <!-- Hero Content -->
+        <div class="container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center relative z-10">
+            <div>
+                <div class="text-sm font-medium text-gray-400 mb-2 uppercase tracking-wide">نحن نسهل الأمر عليك</div>
+                <h1 class="text-5xl md:text-7xl font-bold text-white leading-tight mb-6">
+                    أنشئ موقعاً جميلاً <br> بسهولة تامة!
+                </h1>
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-full bg-brand-accent flex items-center justify-center text-black text-xl cursor-pointer hover:scale-110 transition">
+                        <i class="fas fa-play"></i>
+                    </div>
+                    <span class="text-white font-medium">شاهد كيف تنشئ<br>موقعك بسرعة</span>
+                </div>
+            </div>
+            
+            <!-- Floating Elements Graphic -->
+            <div class="hidden md:block relative">
+                <div class="absolute top-0 left-0 w-64 h-40 bg-gray-700 rounded shadow-2xl transform -rotate-6 opacity-50"></div>
+                <div class="absolute top-10 left-20 w-64 h-40 bg-gray-600 rounded shadow-2xl transform rotate-3 opacity-80"></div>
+                <div class="relative w-full max-w-md mr-auto bg-gray-800 rounded-lg shadow-2xl border border-gray-700 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format&fit=crop" alt="Dashboard" class="w-full h-auto opacity-80">
+                </div>
+            </div>
+        </div>
+
+        <!-- Big Number Badge -->
+        <div class="absolute bottom-10 right-6 md:right-20 z-20 bg-white p-4 rounded-lg shadow-lg flex items-center gap-4 pl-8 max-w-xs">
+            <div class="text-6xl font-bold text-gray-800">15<span class="text-brand-accent text-4xl align-top">+</span></div>
+            <div class="text-sm font-bold text-gray-800 leading-tight">
+                موقع كامل جاهز <br> <span class="font-normal text-gray-500">لبدء العمل.</span>
+            </div>
+        </div>
+
+        <!-- White Curve Separator -->
+        <div class="absolute bottom-0 w-full">
+            <svg viewBox="0 0 1440 100" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" class="w-full h-24 text-white fill-current">
+                <path d="M0 100L1440 0V100H0Z" />
+            </svg>
+        </div>
+    </header>
+
+    <!-- White Section: Features -->
+    <section class="bg-white py-20 relative z-10">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <div class="p-4">
+                    <div class="w-16 h-16 mx-auto text-brand-accent text-4xl mb-4"><i class="fas fa-layer-group"></i></div>
+                    <h3 class="font-bold text-gray-800 text-lg mb-2">مواقع جاهزة</h3>
+                    <p class="text-sm text-gray-500">وفر الوقت في تصميم المواقع باستيراد مواقع جاهزة ومتقنة.</p>
+                </div>
+                <div class="p-4">
+                    <div class="w-16 h-16 mx-auto text-brand-accent text-4xl mb-4"><i class="fas fa-laptop-code"></i></div>
+                    <h3 class="font-bold text-gray-800 text-lg mb-2">بناء مباشر</h3>
+                    <p class="text-sm text-gray-500">أنشئ وخصص موقعك في الوقت الفعلي وشاهد النتائج فوراً.</p>
+                </div>
+                <div class="p-4">
+                    <div class="w-16 h-16 mx-auto text-brand-accent text-4xl mb-4"><i class="fas fa-bolt"></i></div>
+                    <h3 class="font-bold text-gray-800 text-lg mb-2">أداء فائق السرعة</h3>
+                    <p class="text-sm text-gray-500">نقدم أخف القوالب في السوق لتوفير أداء لا مثيل له.</p>
+                </div>
+                <div class="p-4">
+                    <div class="w-16 h-16 mx-auto text-brand-accent text-4xl mb-4"><i class="fas fa-sync-alt"></i></div>
+                    <h3 class="font-bold text-gray-800 text-lg mb-2">تحديثات مدى الحياة</h3>
+                    <p class="text-sm text-gray-500">اشترِ مرة واحدة واحصل على تحديثات مدى الحياة وميزات إضافية مجاناً.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Dark Curve Transition to Portfolio -->
+        <div class="absolute bottom-0 w-full transform rotate-180">
+             <svg viewBox="0 0 1440 100" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" class="w-full h-24 text-brand-darker fill-current">
+                <path d="M0 100L1440 0V100H0Z" />
+            </svg>
+        </div>
+    </section>
+
+    <!-- NEW PORTFOLIO SLIDER SECTION (Replaces Grid) -->
+    <section class="bg-brand-darker py-24 overflow-hidden relative">
+        
+        <!-- Decorative Glow (Green) -->
+        <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-green-600 to-transparent opacity-30"></div>
+
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <div class="text-brand-accent text-4xl mb-4"><i class="fas fa-layer-group"></i></div>
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-2">15 موقع كامل من أعمالي</h2>
+                <p class="text-gray-500">استكشف نماذج حية لمواقع قمت بتطويرها (اسحب لليمين واليسار).</p>
+            </div>
+
+            <!-- Swiper Slider -->
+            <div class="relative w-full">
+                <div class="swiper portfolio-slider">
+                    <div class="swiper-wrapper">
+                        
+                        <!-- 1. Taradi Immobilier -->
+                        <div class="swiper-slide group">
+                            <a href="https://taradiimmobilier.com/" target="_blank" class="block w-full h-full relative">
+                                <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=1600&auto=format&fit=crop" class="w-full h-full object-cover" alt="Taradi">
+                                <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-center items-center">
+                                    <h3 class="text-white font-bold text-2xl mb-2">Taradi Immobilier</h3>
+                                    <span class="bg-brand-green text-white px-4 py-1 rounded-full text-sm">زيارة الموقع</span>
+                                </div>
+                            </a>
+                        </div>
+
+                        <!-- 2. Plastoys DZ -->
+                        <div class="swiper-slide group">
+                            <a href="https://plastoys.dz/" target="_blank" class="block w-full h-full relative">
+                                <img src="https://images.unsplash.com/photo-1558882224-dda166733046?q=80&w=1600&auto=format&fit=crop" class="w-full h-full object-cover" alt="Plastoys">
+                                <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-center items-center">
+                                    <h3 class="text-white font-bold text-2xl mb-2">Plastoys</h3>
+                                    <span class="bg-brand-green text-white px-4 py-1 rounded-full text-sm">زيارة الموقع</span>
+                                </div>
+                            </a>
+                        </div>
+
+                        <!-- 3. Groupe Siad -->
+                        <div class="swiper-slide group">
+                            <a href="https://groupesiad.com/" target="_blank" class="block w-full h-full relative">
+                                <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1600&auto=format&fit=crop" class="w-full h-full object-cover" alt="Groupe Siad">
+                                <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-center items-center">
+                                    <h3 class="text-white font-bold text-2xl mb-2">Groupe Siad</h3>
+                                    <span class="bg-brand-green text-white px-4 py-1 rounded-full text-sm">زيارة الموقع</span>
+                                </div>
+                            </a>
+                        </div>
+
+                        <!-- 4. SMS Algerie -->
+                        <div class="swiper-slide group">
+                            <a href="https://sms-algerie.net/" target="_blank" class="block w-full h-full relative">
+                                <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=1600&auto=format&fit=crop" class="w-full h-full object-cover" alt="SMS Algerie">
+                                <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-center items-center">
+                                    <h3 class="text-white font-bold text-2xl mb-2">SMS Algérie</h3>
+                                    <span class="bg-brand-green text-white px-4 py-1 rounded-full text-sm">زيارة الموقع</span>
+                                </div>
+                            </a>
+                        </div>
+
+                        <!-- 5. VAM Electric -->
+                        <div class="swiper-slide group">
+                            <a href="https://vam-electric.com/" target="_blank" class="block w-full h-full relative">
+                                <img src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?q=80&w=1600&auto=format&fit=crop" class="w-full h-full object-cover" alt="VAM Electric">
+                                <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-center items-center">
+                                    <h3 class="text-white font-bold text-2xl mb-2">VAM Electric</h3>
+                                    <span class="bg-brand-green text-white px-4 py-1 rounded-full text-sm">زيارة الموقع</span>
+                                </div>
+                            </a>
+                        </div>
+
+                        <!-- 6. CityOne Algeria -->
+                        <div class="swiper-slide group">
+                            <a href="https://cityone-algeria.com/" target="_blank" class="block w-full h-full relative">
+                                <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1600&auto=format&fit=crop" class="w-full h-full object-cover" alt="CityOne">
+                                <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-center items-center">
+                                    <h3 class="text-white font-bold text-2xl mb-2">CityOne Algeria</h3>
+                                    <span class="bg-brand-green text-white px-4 py-1 rounded-full text-sm">زيارة الموقع</span>
+                                </div>
+                            </a>
+                        </div>
+
+                        <!-- 7. Admin Dashboard -->
+                        <div class="swiper-slide group">
+                            <div class="relative w-full h-full">
+                                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1600&auto=format&fit=crop" class="w-full h-full object-cover" alt="Admin">
+                                <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-center items-center">
+                                    <h3 class="text-white font-bold text-2xl mb-2">لوحة تحكم</h3>
+                                    <span class="bg-brand-green text-white px-4 py-1 rounded-full text-sm">معاينة</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 8. E-Commerce -->
+                        <div class="swiper-slide group">
+                            <div class="relative w-full h-full">
+                                <img src="https://images.unsplash.com/photo-1472851294608-41531b657481?q=80&w=1600&auto=format&fit=crop" class="w-full h-full object-cover" alt="Shop">
+                                <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-center items-center">
+                                    <h3 class="text-white font-bold text-2xl mb-2">متجر إلكتروني</h3>
+                                    <span class="bg-brand-green text-white px-4 py-1 rounded-full text-sm">معاينة</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 9. Medical -->
+                        <div class="swiper-slide group">
+                            <div class="relative w-full h-full">
+                                <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=1600&auto=format&fit=crop" class="w-full h-full object-cover" alt="Medical">
+                                <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-center items-center">
+                                    <h3 class="text-white font-bold text-2xl mb-2">عيادة طبية</h3>
+                                    <span class="bg-brand-green text-white px-4 py-1 rounded-full text-sm">معاينة</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 10. Restaurant -->
+                        <div class="swiper-slide group">
+                            <div class="relative w-full h-full">
+                                <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=1600&auto=format&fit=crop" class="w-full h-full object-cover" alt="Restaurant">
+                                <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-center items-center">
+                                    <h3 class="text-white font-bold text-2xl mb-2">مطعم فاخر</h3>
+                                    <span class="bg-brand-green text-white px-4 py-1 rounded-full text-sm">معاينة</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 11. Gym -->
+                        <div class="swiper-slide group">
+                            <div class="relative w-full h-full">
+                                <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1600&auto=format&fit=crop" class="w-full h-full object-cover" alt="Gym">
+                                <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-center items-center">
+                                    <h3 class="text-white font-bold text-2xl mb-2">نادي رياضي</h3>
+                                    <span class="bg-brand-green text-white px-4 py-1 rounded-full text-sm">معاينة</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 12. Education -->
+                        <div class="swiper-slide group">
+                            <div class="relative w-full h-full">
+                                <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1600&auto=format&fit=crop" class="w-full h-full object-cover" alt="Education">
+                                <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-center items-center">
+                                    <h3 class="text-white font-bold text-2xl mb-2">منصة تعليمية</h3>
+                                    <span class="bg-brand-green text-white px-4 py-1 rounded-full text-sm">معاينة</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 13. Construction -->
+                        <div class="swiper-slide group">
+                            <div class="relative w-full h-full">
+                                <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=1600&auto=format&fit=crop" class="w-full h-full object-cover" alt="Construction">
+                                <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-center items-center">
+                                    <h3 class="text-white font-bold text-2xl mb-2">شركة مقاولات</h3>
+                                    <span class="bg-brand-green text-white px-4 py-1 rounded-full text-sm">معاينة</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 14. Lawyer -->
+                        <div class="swiper-slide group">
+                            <div class="relative w-full h-full">
+                                <img src="https://images.unsplash.com/photo-1589829085413-56de8ae18c73?q=80&w=1600&auto=format&fit=crop" class="w-full h-full object-cover" alt="Lawyer">
+                                <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-center items-center">
+                                    <h3 class="text-white font-bold text-2xl mb-2">مكتب محاماة</h3>
+                                    <span class="bg-brand-green text-white px-4 py-1 rounded-full text-sm">معاينة</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 15. Car Rental -->
+                        <div class="swiper-slide group">
+                            <div class="relative w-full h-full">
+                                <img src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?q=80&w=1600&auto=format&fit=crop" class="w-full h-full object-cover" alt="Car Rental">
+                                <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-center items-center">
+                                    <h3 class="text-white font-bold text-2xl mb-2">تأجير سيارات</h3>
+                                    <span class="bg-brand-green text-white px-4 py-1 rounded-full text-sm">معاينة</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Custom Navigation Buttons -->
+                <div class="slider-nav-btn slider-prev">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+                <div class="slider-nav-btn slider-next">
+                    <i class="fas fa-arrow-left"></i>
+                </div>
+            </div>
+
+            <!-- Bottom CTA -->
+            <div class="text-center mt-12">
+                <p class="text-gray-400 mb-4 italic">هذه مجرد أمثلة قليلة، استكشف المزيد...</p>
+                <button class="bg-brand-accent text-black font-bold py-3 px-8 rounded hover:bg-yellow-500 transition">
+                    <i class="fas fa-arrow-left ml-2"></i> عرض جميع الأعمال
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Yellow Banner -->
+    <section class="bg-brand-accent py-12 text-center">
+        <div class="container mx-auto px-6">
+            <h3 class="text-black font-bold text-2xl md:text-3xl uppercase tracking-wide mb-2">لا حاجة لخبرة برمجية!</h3>
+            <p class="text-black opacity-80">أنشئ موقعك ببعض النقرات فقط!</p>
+        </div>
+    </section>
+
+    <!-- Features Icons Row -->
+    <section class="bg-brand-darker py-16 border-b border-gray-800">
+        <div class="container mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <div>
+                <div class="text-white text-3xl mb-4"><i class="far fa-clone"></i></div>
+                <h4 class="text-white font-bold mb-2">سحب وإفلات</h4>
+                <p class="text-xs text-gray-500 px-4">ميزات سحب وإفلات كاملة متوافقة مع منشئي الصفحات المشهورين.</p>
+            </div>
+            <div>
+                <div class="text-white text-3xl mb-4"><i class="fas fa-magic"></i></div>
+                <h4 class="text-white font-bold mb-2">100+ عنصر</h4>
+                <p class="text-xs text-gray-500 px-4">أكثر من 100 عنصر فريد ومفيد.</p>
+            </div>
+            <div>
+                <div class="text-white text-3xl mb-4"><i class="far fa-eye"></i></div>
+                <h4 class="text-white font-bold mb-2">وضع المعاينة المباشرة</h4>
+                <p class="text-xs text-gray-500 px-4">مع المخصص القوي، يمكنك رؤية ما تنشئه قبل نشره.</p>
+            </div>
+            <div>
+                <div class="text-white text-3xl mb-4"><i class="fas fa-mobile-alt"></i></div>
+                <h4 class="text-white font-bold mb-2">تصميم متجاوب</h4>
+                <p class="text-xs text-gray-500 px-4">احصل على أنماط مختلفة للموبايل والتابلت والكمبيوتر.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="bg-brand-dark py-20 text-center">
+        <div class="container mx-auto px-6">
+            <div class="text-brand-accent text-4xl font-bold mb-2">22,000+</div>
+            <p class="text-white font-medium mb-2">عملاء سعداء لا يمكن أن يكونوا مخطئين!</p>
+            <div class="text-brand-accent text-sm mb-12">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+            </div>
+
+            <h2 class="text-3xl font-bold text-white mb-2">آراء العملاء</h2>
+            <p class="text-gray-500 text-sm mb-12">شاهد ما قاله عملاؤنا عن خدماتنا.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-right max-w-5xl mx-auto">
+                <!-- Testimonial 1 -->
+                <div class="bg-gray-800 p-6 rounded border border-gray-700">
+                    <div class="flex justify-between items-center mb-2">
+                        <div class="text-brand-accent text-xs"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        <div class="text-xs text-gray-500">جودة الكود</div>
+                    </div>
+                    <p class="text-gray-400 text-xs leading-relaxed">"قالب رائع! تصميم جميل جداً، لوحة تحكم سهلة التخصيص! يمكنني بناء مئات المواقع لعملائي. شكراً لعملكم!!"</p>
+                </div>
+                <!-- Testimonial 2 -->
+                <div class="bg-gray-800 p-6 rounded border border-gray-700">
+                    <div class="flex justify-between items-center mb-2">
+                        <div class="text-brand-accent text-xs"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        <div class="text-xs text-gray-500">توفر الميزات</div>
+                    </div>
+                    <p class="text-gray-400 text-xs leading-relaxed">"أنا لا أكتب مراجعات عادة، لكنني متحمس جداً الآن وأريد أن أعطي هذا القالب 10 نجوم. سعيد جداً لأنني تمكنت من إطلاق مواقع حية في الأسبوع الماضي."</p>
+                </div>
+                <!-- Testimonial 3 -->
+                <div class="bg-gray-800 p-6 rounded border border-gray-700">
+                    <div class="flex justify-between items-center mb-2">
+                        <div class="text-brand-accent text-xs"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        <div class="text-xs text-gray-500">قابلية التخصيص</div>
+                    </div>
+                    <p class="text-gray-400 text-xs leading-relaxed">"واحد من أفضل القوالب التي استخدمتها. عملت مع أكثر القوالب شعبية. فريق الدعم حل المشكلة في ساعتين. استمروا في هذا العمل الرائع."</p>
+                </div>
+                <!-- Testimonial 4 -->
+                <div class="bg-gray-800 p-6 rounded border border-gray-700">
+                    <div class="flex justify-between items-center mb-2">
+                        <div class="text-brand-accent text-xs"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        <div class="text-xs text-gray-500">جودة التصميم</div>
+                    </div>
+                    <p class="text-gray-400 text-xs leading-relaxed">"هذه هي المرة الأولى التي أخصص فيها وقتاً لتقييم قالب. هذا القالب ممتاز!"</p>
+                </div>
+            </div>
+            <div class="mt-8 text-gray-500 text-sm">وهذا مجرد قليل من كثير ...</div>
+        </div>
+    </section>
+
+    <!-- FAQ Section (White with Curve) -->
+    <section class="relative bg-white pt-32 pb-24 mt-20 text-right">
+        <!-- Top Curve (Inverted) -->
+        <div class="absolute top-0 left-0 w-full -mt-1 transform rotate-180">
+             <svg viewBox="0 0 1440 100" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" class="w-full h-24 text-white fill-current">
+                <path d="M0 0C240 100 1200 100 1440 0V100H0V0Z" />
+            </svg>
+        </div>
+
+        <div class="container mx-auto px-6 flex flex-col md:flex-row gap-12">
+            <!-- FAQ Title -->
+            <div class="md:w-1/3">
+                <h2 class="text-3xl font-bold text-gray-800 leading-tight">
+                    <span class="text-brand-accent">أ</span>سئلة<br>
+                    <span class="text-brand-accent">ش</span>ائعة<br>
+                    <span class="text-brand-accent">م</span>تكررة
+                </h2>
+                <p class="text-gray-500 mt-4 text-sm">هل لديك أي أسئلة؟</p>
+            </div>
+
+            <!-- FAQ Accordion -->
+            <div class="md:w-2/3 space-y-4">
+                <div class="faq-item border border-gray-200 rounded overflow-hidden">
+                    <button class="w-full flex justify-between items-center p-4 bg-white hover:bg-gray-50 text-right font-medium text-gray-700 text-sm" onclick="toggleFaq(this)">
+                        ما الذي يتضمنه شراء القالب؟
+                        <i class="fas fa-chevron-down text-gray-400 transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-content bg-gray-50 px-4 text-xs text-gray-500">
+                        <div class="py-4">تحصل على القالب، وجميع الإضافات المضمنة، وجميع بيانات العرض التجريبي، و6 أشهر من الدعم.</div>
+                    </div>
+                </div>
+                <div class="faq-item border border-gray-200 rounded overflow-hidden">
+                    <button class="w-full flex justify-between items-center p-4 bg-white hover:bg-gray-50 text-right font-medium text-gray-700 text-sm" onclick="toggleFaq(this)">
+                        هل هناك أي رسوم متكررة؟
+                        <i class="fas fa-chevron-down text-gray-400 transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-content bg-gray-50 px-4 text-xs text-gray-500">
+                        <div class="py-4">لا، إنه شراء لمرة واحدة لترخيص مدى الحياة لموقع ويب واحد.</div>
+                    </div>
+                </div>
+                <div class="faq-item border border-gray-200 rounded overflow-hidden">
+                    <button class="w-full flex justify-between items-center p-4 bg-white hover:bg-gray-50 text-right font-medium text-gray-700 text-sm" onclick="toggleFaq(this)">
+                        أين يمكنني الحصول على الدعم؟
+                        <i class="fas fa-chevron-down text-gray-400 transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-content bg-gray-50 px-4 text-xs text-gray-500">
+                        <div class="py-4">يمكنك الوصول إلى مركز الدعم عبر لوحة تحكم حسابك.</div>
+                    </div>
+                </div>
+                <div class="faq-item border border-gray-200 rounded overflow-hidden">
+                    <button class="w-full flex justify-between items-center p-4 bg-white hover:bg-gray-50 text-right font-medium text-gray-700 text-sm" onclick="toggleFaq(this)">
+                        هل يمكنني استرداد أموالي؟
+                        <i class="fas fa-chevron-down text-gray-400 transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-content bg-gray-50 px-4 text-xs text-gray-500">
+                        <div class="py-4">نعم، نقدم ضمان استرداد الأموال لمدة 14 يوماً إذا لم تكن راضياً.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Bottom Curve (Back to Dark) -->
+        <div class="absolute bottom-0 w-full -mb-1">
+             <svg viewBox="0 0 1440 100" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" class="w-full h-20 text-brand-darker fill-current">
+                <path d="M0 100C240 0 1200 0 1440 100V100H0V100Z" />
+            </svg>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-brand-darker pt-24 pb-10 border-t border-gray-800">
+        <div class="container mx-auto px-6 text-center">
+            <div class="text-white text-xl font-bold mb-4">جاهز للبدء؟</div>
+            <p class="text-brand-accent text-sm mb-8">شراؤك خالٍ من المخاطر بنسبة 100%.</p>
+            
+            <a href="https://wa.me/213793726558" target="_blank" class="inline-block bg-brand-accent text-black font-bold py-3 px-8 rounded hover:bg-yellow-500 transition mb-16">
+                <i class="fab fa-whatsapp ml-2"></i> اطلب خدمتك الآن
+            </a>
+
+            <!-- Updated Contact Information Section -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 border-t border-gray-800 pt-10 text-right">
+                <!-- Phone Numbers -->
+                <div class="flex items-start justify-center md:justify-start gap-3">
+                    <i class="fas fa-phone-alt text-brand-accent text-xl mt-1"></i>
+                    <div>
+                        <div class="text-white font-bold text-sm mb-1">الهاتف</div>
+                        <div dir="ltr" class="text-gray-500 text-xs text-right space-y-1">
+                            <div>0562 63 34 60</div>
+                            <div>0540 37 62 39</div>
+                            <div>0791 80 17 26</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Email -->
+                <div class="flex items-start justify-center md:justify-start gap-3">
+                    <i class="fas fa-envelope text-brand-accent text-xl mt-1"></i>
+                    <div>
+                        <div class="text-white font-bold text-sm mb-1">البريد الإلكتروني</div>
+                        <div class="text-gray-500 text-xs">nabradziriya@gmail.com</div>
+                    </div>
+                </div>
+
+                <!-- Social Media -->
+                <div class="flex items-start justify-center md:justify-start gap-3">
+                    <i class="fas fa-globe text-brand-accent text-xl mt-1"></i>
+                    <div>
+                        <div class="text-white font-bold text-sm mb-2">تابعنا على</div>
+                        <div class="flex gap-4">
+                            <a href="https://www.facebook.com/profile.php?id=61579355122011" target="_blank" class="text-white hover:text-brand-accent transition text-2xl">
+                                <i class="fab fa-facebook"></i>
+                            </a>
+                            <a href="https://www.instagram.com/nabra.dziriya/" target="_blank" class="text-white hover:text-brand-accent transition text-2xl">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                        </div>
+                        <div class="text-gray-600 text-xs mt-2">نعمل أونلاين بالكامل</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-12 text-gray-600 text-xs text-center">
+                جميع الحقوق محفوظة © 2025
+            </div>
+        </div>
+    </footer>
+
+    <!-- Swiper JS Script -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        // Initialize Swiper for Portfolio
+        const swiper = new Swiper('.portfolio-slider', {
+            // Parameters
+            effect: 'coverflow', // 3D Effect
+            grabCursor: true,
+            centeredSlides: true,
+            slidesPerView: 'auto', // Adjust based on width
+            initialSlide: 1,
+            loop: true,
+            spaceBetween: 30,
+            
+            // Responsive Breakpoints
+            breakpoints: {
+                320: {
+                    slidesPerView: 1.3,
+                    spaceBetween: 20
+                },
+                768: {
+                    slidesPerView: 2.5,
+                    spaceBetween: 30
+                },
+                1024: {
+                    slidesPerView: 3.5,
+                    spaceBetween: 40
+                }
+            },
+
+            // Coverflow Effect Settings
+            coverflowEffect: {
+                rotate: 0,
+                stretch: 0,
+                depth: 200,
+                modifier: 1,
+                slideShadows: false,
+            },
+
+            // Navigation arrows
+            navigation: {
+                nextEl: '.slider-next',
+                prevEl: '.slider-prev',
+            },
+        });
+
+        // FAQ Toggle Function
+        function toggleFaq(button) {
+            const item = button.parentElement;
+            const isActive = item.classList.contains('active');
+            
+            // Close all others
+            document.querySelectorAll('.faq-item').forEach(el => {
+                el.classList.remove('active');
+            });
+
+            // Toggle current
+            if (!isActive) {
+                item.classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html>
